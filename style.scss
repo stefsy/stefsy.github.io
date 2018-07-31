@@ -1,0 +1,137 @@
+$width-container: 650px;
+$height-header: 60px;
+
+$left-header: calc(50% - 325px);
+
+$margin-top: 40px;
+$margin-side: 15px;
+$margin-bottom: 30px;
+
+$font-body: 'Quattrocento', serif;
+$font-heading: 'Oswald', sans-serif;
+$font-nav: 'Source Sans Pro', sans-serif;
+
+$color-secondary: #EDEDED;
+$color-primary: #262626;
+$color-accent: #777;
+$color-accent-2: #C73A29;
+
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: $font-body;
+	background-color: $color-secondary;
+	color: $color-primary;
+	line-height: 140%;
+	font-size: 0.95em;
+	text-align: center;
+}
+
+header {
+	background-color: $color-accent;
+	position: fixed;
+	width: $width-container;
+	top: 0;
+	left: $left-header;
+	z-index: 99;
+	height: $height-header;
+	display: table;
+}
+
+	h1 {
+		color: $color-secondary;
+		font-family: $font-heading;
+		text-transform: uppercase;
+		font-size: 2em;
+        padding: 0 0 0 $margin-side;
+        white-space: nowrap;
+        text-align: center;
+        margin-top: 20px;
+        display: table-cell;
+        vertical-align: middle;
+
+		a {
+			color: $color-secondary;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	nav {
+		display: table-cell;
+		vertical-align: middle;
+		width: 100%;
+		font-family: $font-nav;
+
+	 	ul {
+	 		list-style: none;
+	 		text-align: right;
+	 		padding: 0;
+	 		margin: 0 10px 0 0;
+	 		color: $color-secondary;
+	 		font-size: 0.85em;
+
+	 		li {
+	 			display: inline-block;
+	 			text-transform: uppercase;
+
+	 			a {
+	 				color: inherit;
+	 				transition: 0.25s;
+	 				padding: 5px 10px;
+	 				border-bottom: 2px solid transparent;
+
+	 				&:hover {
+	 					color: $color-secondary;
+	 					border-color: $color-secondary;
+	 					text-decoration: none;
+	 				}
+
+	 			}
+	 		}
+	 	}
+	}
+
+#content {
+	width: $width-container;
+	margin: $height-header + 30px auto $margin-bottom;
+	box-sizing: border-box;
+	padding: 0 $margin-side;
+	text-align: justify;
+	z-index: 50;
+}
+
+	a.anchor {
+		position: relative;
+		top: -40px;
+		display: block;
+	    width: 1px;
+	    height: 1px;
+	}
+
+	h2 {
+		font-family: $font-heading;
+		color: $color-accent;
+		padding-top: 20px;
+		text-transform: uppercase;
+	}
+
+	p {
+		padding: 5px 0;
+	}
+
+	a {
+		color: $color-accent-2;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
