@@ -23,13 +23,13 @@ header {
   display: table;
   height: 80px;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   header {
     display: table-cell;
     height: 60px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   header {
     width: 650px;
     left: calc(50% - 325px);
@@ -47,13 +47,13 @@ h1 {
   display: block;
   vertical-align: middle;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   h1 {
     padding: 20px 0 0 15px;
     display: table-cell;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   h1 {
     font-size: 2em;
   }
@@ -71,7 +71,7 @@ nav {
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   nav {
     display: table-cell;
     padding-top: 20px;
@@ -85,7 +85,7 @@ nav ul {
   color: #EDEDED;
   font-size: 0.85em;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   nav ul {
     text-align: right;
     margin: 0 10px 0 0;
@@ -118,12 +118,12 @@ nav ul li a:active {
   text-align: justify;
   z-index: 50;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   #content {
     margin: 90px auto 30px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   #content {
     width: 650px;
   }
@@ -136,7 +136,7 @@ a.anchor {
   width: 1px;
   height: 1px;
 }
-@media (min-width: 480px) {
+@media (min-width: 481px) {
   a.anchor {
     top: -40px;
   }

@@ -1,3 +1,6 @@
+$cutoff-mobile: 769px;
+$cutoff-xs-mobile: 481px;
+
 $width-container: 650px;
 $height-header: 60px;
 $height-header-mobile: 80px;
@@ -43,12 +46,12 @@ header {
 	display: table;
 	height: $height-header-mobile;
 
-	@media (min-width: 480px) {
+	@media (min-width: $cutoff-xs-mobile) {
 		display: table-cell;
 		height: $height-header;
 	}
 
-	@media (min-width: 768px) {
+	@media (min-width: $cutoff-mobile) {
 		width: $width-container;
 		left: $left-header;
 	}
@@ -65,12 +68,12 @@ header {
         display: block;
         vertical-align: middle;
 
-        @media (min-width: 480px) {
+        @media (min-width: $cutoff-xs-mobile) {
 			padding: 20px 0 0 $margin-side;
 			display: table-cell;
 		}
 
-        @media (min-width: 768px) {
+        @media (min-width: $cutoff-mobile) {
 			font-size: 2em;
 		}
 
@@ -89,7 +92,7 @@ header {
 		width: 100%;
 		font-family: $font-nav;
 
-		@media (min-width: 480px) {
+		@media (min-width: $cutoff-xs-mobile) {
 			display: table-cell;
 			padding-top: 20px;
 		}
@@ -102,7 +105,7 @@ header {
 	 		color: $color-secondary;
 	 		font-size: 0.85em;
 
-	 		@media (min-width: 480px) {
+	 		@media (min-width: $cutoff-xs-mobile) {
 				text-align: right;
 				margin: 0 10px 0 0;
 			}
@@ -141,11 +144,11 @@ header {
 	text-align: justify;
 	z-index: 50;
 
-	@media (min-width: 480px) {
+	@media (min-width: $cutoff-xs-mobile) {
 		margin: $height-header + 30px auto $margin-bottom;
 	}
 
-	@media (min-width: 768px) {
+	@media (min-width: $cutoff-mobile) {
 		width: $width-container;
 	}
 }
@@ -157,7 +160,7 @@ header {
 	    width: 1px;
 	    height: 1px;
 
-	    @media (min-width: 480px) {
+	    @media (min-width: $cutoff-xs-mobile) {
 			top: 20px - $height-header;
 		}
 
