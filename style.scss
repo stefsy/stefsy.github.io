@@ -1,5 +1,6 @@
 $width-container: 650px;
 $height-header: 60px;
+$height-header-mobile: 80px;
 
 $left-header: calc(50% - 325px);
 
@@ -35,25 +36,43 @@ body {
 header {
 	background-color: $color-accent;
 	position: fixed;
-	width: $width-container;
+	width: 100%;
 	top: 0;
-	left: $left-header;
+	left: 0;
 	z-index: 99;
-	height: $height-header;
 	display: table;
+	height: $height-header-mobile;
+
+	@media (min-width: 480px) {
+		display: table-cell;
+		height: $height-header;
+	}
+
+	@media (min-width: 768px) {
+		width: $width-container;
+		left: $left-header;
+	}
 }
 
 	h1 {
 		color: $color-secondary;
 		font-family: $font-heading;
 		text-transform: uppercase;
-		font-size: 2em;
-        padding: 0 0 0 $margin-side;
+		font-size: 1.5em;
+		padding: 20px 10px 0;
         white-space: nowrap;
         text-align: center;
-        margin-top: 20px;
-        display: table-cell;
+        display: block;
         vertical-align: middle;
+
+        @media (min-width: 480px) {
+			padding: 20px 0 0 $margin-side;
+			display: table-cell;
+		}
+
+        @media (min-width: 768px) {
+			font-size: 2em;
+		}
 
 		a {
 			color: $color-secondary;
@@ -65,18 +84,28 @@ header {
 	}
 
 	nav {
-		display: table-cell;
+		display: block;
 		vertical-align: middle;
 		width: 100%;
 		font-family: $font-nav;
 
+		@media (min-width: 480px) {
+			display: table-cell;
+			padding-top: 20px;
+		}
+
 	 	ul {
 	 		list-style: none;
-	 		text-align: right;
+	 		text-align: center;
 	 		padding: 0;
-	 		margin: 0 10px 0 0;
+	 		margin: 0 0 10px;
 	 		color: $color-secondary;
 	 		font-size: 0.85em;
+
+	 		@media (min-width: 480px) {
+				text-align: right;
+				margin: 0 10px 0 0;
+			}
 
 	 		li {
 	 			display: inline-block;
@@ -88,10 +117,15 @@ header {
 	 				padding: 5px 10px;
 	 				border-bottom: 2px solid transparent;
 
-	 				&:hover {
+	 				&:hover,
+	 				&.active {
 	 					color: $color-secondary;
 	 					border-color: $color-secondary;
 	 					text-decoration: none;
+	 				}
+
+	 				&:active {
+	 					border-color: transparent;
 	 				}
 
 	 			}
@@ -100,20 +134,33 @@ header {
 	}
 
 #content {
-	width: $width-container;
-	margin: $height-header + 30px auto $margin-bottom;
+	width: 100%;
+	margin: $height-header-mobile + 30px auto $margin-bottom;
 	box-sizing: border-box;
 	padding: 0 $margin-side;
 	text-align: justify;
 	z-index: 50;
+
+	@media (min-width: 480px) {
+		margin: $height-header + 30px auto $margin-bottom;
+	}
+
+	@media (min-width: 768px) {
+		width: $width-container;
+	}
 }
 
 	a.anchor {
 		position: relative;
-		top: -40px;
+		top: 20px - $height-header-mobile;
 		display: block;
 	    width: 1px;
 	    height: 1px;
+
+	    @media (min-width: 480px) {
+			top: 20px - $height-header;
+		}
+
 	}
 
 	h2 {
@@ -134,4 +181,8 @@ header {
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+
+	img {
+		max-width: 100%;
 	}

@@ -4,6 +4,7 @@
 	<title>Stephanie Sy</title>
 	<meta name="description" content="Hi, I'm @stefsy. I'm a startup founder and data nerd based mostly out of Manila, Philippines.">
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display|Source+Sans+Pro" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Oswald|Quattrocento" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Crimson+Text|Unica+One" rel="stylesheet">
@@ -11,47 +12,85 @@
 </head>
 
 <body>
+
 	<header>
 		<h1><a href="#">Stephanie Sy</a></h1>
 		<nav>
 			<ul>
-				<li><a href="#">About</a></li>
-				<li><a href="#speaking">Speaking</a></li>
-				<li><a href="#press">Press</a></li>
+				<li><a href="#" data-section="about">About</a></li>
+				<li><a href="#speaking" data-section="speaking">Speaking</a></li>
+				<li><a href="#press" data-section="press">Press</a></li>
 			</ul>
 		</nav>
 	</header>
 
 	<section id="content">
 
-		<p>Hi, I'm <b>@stefsy</b>. I'm a startup founder and data nerd based mostly out of Manila, Philippines.</p>  
+		<section class="content-section" data-section="about">
+			<p>Hi, I'm <b>@stefsy</b>. I'm a startup founder and data nerd based mostly out of Manila, Philippines.</p>  
 
-		<p>I'm the founder and CEO of Thinking Machines. We help organizations make better decisions with data by building data systems with them. <a href="http://thinkingmachin.es" target="_blank">Read about the kinds of machine learning work we do here!</a></p>
+			<p>I'm the founder and CEO of Thinking Machines. We help organizations make better decisions with data by building data systems with them. <a href="http://thinkingmachin.es" target="_blank">Read about the kinds of machine learning work we do here!</a></p>
 
-		<p>Some of my talks are listed here, and press material. If you're reaching out about a talk, please send a message to <b>events@thinkingmachin.es</b></p>
+			<p>Some of my talks are listed here, and press material. If you're reaching out about a talk, please send a message to <b>events@thinkingmachin.es</b></p>
 
-		<p>Here are my <a href="">LinkedIn</a> and <a href="">Twitter</a> handles.</p>
-
-
-		<h2>Thinking Machines</h2>
-
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-		<img src="tm-logo-horizontal-red-transparent_gmail.png"/>
+			<p>Here are my <a href="">LinkedIn</a> and <a href="">Twitter</a> handles.</p>
 
 
-		<a class="anchor" name="speaking"></a>
-		<h2>Speaking</h2>
+			<h2>Thinking Machines</h2>
 
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
+			<img src="tm-logo-horizontal-red-transparent_gmail.png"/>
+		</section>
 
-		<a class="anchor" name="press"></a>
-		<h2>Press</h2>
+		<section class="content-section" data-section="speaking">
+			<a class="anchor" name="speaking"></a>
+			<h2>Speaking</h2>
 
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</section>
+
+		<section class="content-section" data-section="press">
+			<a class="anchor" name="press"></a>
+			<h2>Press</h2>
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</section>
 
 	</section>
+
+	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$('a[href^="#"]').click(function () {
+			var scroll = 0;
+			if ($(this).attr("href") != "#") {
+				scroll = $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
+			}
+
+		    $('html, body').animate({
+		        scrollTop: scroll
+		    }, 500);
+
+		    return false;
+		});
+
+		$(document).scroll(function () {
+			$(".content-section").each(function() {
+				console.log(".content-section > " + $(this).data("section"));
+				var position = $(document).scrollTop(); 
+			    var header = $('header').outerHeight();
+
+			    console.log($(this).position().top + " > " + (position + header));
+			    console.log(position);
+			    if (position == 0) {
+			    	$("a.active").removeClass('active');
+			    } else if($(this).position().top <= (position + header)){
+	               $("a.active").removeClass('active');
+	               $("a[data-section=" + $(this).data("section") + "]").addClass('active');
+	          	}
+			});
+		});
+	</script>
 
 </body>
 

@@ -16,25 +16,47 @@ body {
 header {
   background-color: #777;
   position: fixed;
-  width: 650px;
+  width: 100%;
   top: 0;
-  left: calc(50% - 325px);
+  left: 0;
   z-index: 99;
-  height: 60px;
   display: table;
+  height: 80px;
+}
+@media (min-width: 480px) {
+  header {
+    display: table-cell;
+    height: 60px;
+  }
+}
+@media (min-width: 768px) {
+  header {
+    width: 650px;
+    left: calc(50% - 325px);
+  }
 }
 
 h1 {
   color: #EDEDED;
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;
-  font-size: 2em;
-  padding: 0 0 0 15px;
+  font-size: 1.5em;
+  padding: 20px 10px 0;
   white-space: nowrap;
   text-align: center;
-  margin-top: 20px;
-  display: table-cell;
+  display: block;
   vertical-align: middle;
+}
+@media (min-width: 480px) {
+  h1 {
+    padding: 20px 0 0 15px;
+    display: table-cell;
+  }
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
 }
 h1 a {
   color: #EDEDED;
@@ -44,18 +66,30 @@ h1 a:hover {
 }
 
 nav {
-  display: table-cell;
+  display: block;
   vertical-align: middle;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
+@media (min-width: 480px) {
+  nav {
+    display: table-cell;
+    padding-top: 20px;
+  }
+}
 nav ul {
   list-style: none;
-  text-align: right;
+  text-align: center;
   padding: 0;
-  margin: 0 10px 0 0;
+  margin: 0 0 10px;
   color: #EDEDED;
   font-size: 0.85em;
+}
+@media (min-width: 480px) {
+  nav ul {
+    text-align: right;
+    margin: 0 10px 0 0;
+  }
 }
 nav ul li {
   display: inline-block;
@@ -67,27 +101,45 @@ nav ul li a {
   padding: 5px 10px;
   border-bottom: 2px solid transparent;
 }
-nav ul li a:hover {
+nav ul li a:hover, nav ul li a.active {
   color: #EDEDED;
   border-color: #EDEDED;
   text-decoration: none;
 }
+nav ul li a:active {
+  border-color: transparent;
+}
 
 #content {
-  width: 650px;
-  margin: 90px auto 30px;
+  width: 100%;
+  margin: 110px auto 30px;
   box-sizing: border-box;
   padding: 0 15px;
   text-align: justify;
   z-index: 50;
 }
+@media (min-width: 480px) {
+  #content {
+    margin: 90px auto 30px;
+  }
+}
+@media (min-width: 768px) {
+  #content {
+    width: 650px;
+  }
+}
 
 a.anchor {
   position: relative;
-  top: -40px;
+  top: -60px;
   display: block;
   width: 1px;
   height: 1px;
+}
+@media (min-width: 480px) {
+  a.anchor {
+    top: -40px;
+  }
 }
 
 h2 {
@@ -107,6 +159,10 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
