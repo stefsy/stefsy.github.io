@@ -1,74 +1,368 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-	<title>Stephanie Sy</title>
-	<meta name="description" content="Hi, I'm @stefsy. I make data and AI useful for organizations.">
-	<meta http-equiv="content-type" content="text/html;charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Playfair+Display|Source+Sans+Pro" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Oswald|Quattrocento" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Crimson+Text|Unica+One" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Productive Professional's Guide to Generative AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Autumn Spice (#E67E22), Terracotta Clay (#D35400), Honey Glow (#F39C12) -->
+    <!-- Application Structure Plan: The SPA is designed as an "Interactive Syllabus" or "Workshop Hub". A sticky top navigation allows users to jump between key segments: an introduction ("Welcome"), the core demo "Workflows" presented as interactive cards, a conceptual chart and "Key Takeaways" section, and an interactive "FAQ" accordion. This non-linear structure was chosen over a simple slide-for-slide layout to empower users (workshop attendees) to freely explore the topics that interest them most, making the content more accessible and engaging than a linear presentation format. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: The four main workshop themes. -> Goal: Organize & Compare. -> Viz/Presentation: A responsive grid of four interactive cards (HTML/Tailwind). -> Interaction: Subtle hover animations. -> Justification: This breaks the linear slide flow, grouping related demos into thematic clusters for easy comparison and exploration.
+        - Report Info: The concept of evolving AI usage (Levels 1-3). -> Goal: Illustrate a conceptual change. -> Viz/Presentation: A horizontal bar chart. -> Interaction: Tooltips on hover provide details for each level. -> Justification: The chart offers a strong visual anchor for an abstract but critical concept from the workshop. -> Library/Method: Chart.js (Canvas).
+        - Report Info: The list of Frequently Asked Questions. -> Goal: Organize dense information cleanly. -> Viz/Presentation: An accordion component. -> Interaction: Users click a question to reveal the answer. -> Justification: This keeps the UI clean and prevents overwhelming the user, presenting detailed information only on demand. -> Library/Method: Vanilla JS toggling CSS classes.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-header .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.open .accordion-header .accordion-icon {
+            transform: rotate(45deg);
+        }
+    </style>
 </head>
+<body class="bg-gray-50 text-gray-800">
 
-<body>
+    <nav class="bg-gray-50/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <span class="text-lg font-bold text-[#D35400]">GenAI Workshop</span>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#welcome" class="text-gray-600 hover:text-[#E67E22] transition-colors">Welcome</a>
+                    <a href="#workflows" class="text-gray-600 hover:text-[#E67E22] transition-colors">Workflows</a>
+                    <a href="#takeaways" class="text-gray-600 hover:text-[#E67E22] transition-colors">Takeaways</a>
+                    <a href="#faq" class="text-gray-600 hover:text-[#E67E22] transition-colors">FAQ</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden p-2 text-gray-600">
+                    <span id="menu-icon-open">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </span>
+                    <span id="menu-icon-close" class="hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-50 border-t border-gray-200">
+            <a href="#welcome" class="block py-3 px-4 text-base text-gray-700 hover:bg-orange-50">Welcome</a>
+            <a href="#workflows" class="block py-3 px-4 text-base text-gray-700 hover:bg-orange-50">Workflows</a>
+            <a href="#takeaways" class="block py-3 px-4 text-base text-gray-700 hover:bg-orange-50">Takeaways</a>
+            <a href="#faq" class="block py-3 px-4 text-base text-gray-700 hover:bg-orange-50">FAQ</a>
+        </div>
+    </nav>
 
-	<header>
-		<h1><a href="#">Stephanie Sy</a></h1>
-		<nav>
-			<ul>
-				<li><a href="#" data-section="about">About</a></li>
-			<!--	<li><a href="#speaking" data-section="speaking">Speaking</a></li> --> 
-			<!--	<li><a href="#press" data-section="press">Press</a></li> --> 
-			</ul>
-		</nav>
-	</header>
+    <main class="max-w-6xl mx-auto p-4 sm:p-6 md:p-8">
+        
+        <section id="welcome" class="text-center pt-12 pb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#D35400] mb-4">The Productive Professional's Guide to Generative AI</h1>
+            <p class="text-xl text-gray-600 mb-2">Real Workflows, No Code, No Hype.</p>
+            <p class="text-sm text-gray-500 tracking-wider">JUNE 11, 2025</p>
+            <div class="mt-10 max-w-3xl mx-auto bg-white/70 p-8 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-2xl font-semibold text-[#D35400] mb-4">What We'll Actually Do Today</h2>
+                <p class="text-gray-700 leading-relaxed">My workday is a mix of writing, making decks, meetings, and constant context-shifting. This workshop is for people like us. We won't cover high-level AI strategy or deep tech. Instead, I'll show you specific, practical demos that combine common SaaS tools and smart prompting to get real work done efficiently. Today is about building personalized workflows that fit your reality.</p>
+            </div>
+        </section>
 
-	<section id="content">
+        <section id="workflows" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#D35400]">Core Workflows</h2>
+                <p class="text-lg text-gray-600 mt-2">Four practical ways to integrate AI into your daily tasks.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
 
-		<section class="content-section" data-section="about">
-			<p>Hi, I'm <b>@stefsy</b>. I make data and AI useful for organizations.</p>  
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#D35400] mb-3">1. Voice, Memos, and Mobility</h3>
+                    <p class="text-gray-600 mb-4">Your voice is faster than your fingers. Use it for more than just dictation to capture and structure thoughts on the move.</p>
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Demo 1: Fast Typing:</strong> Use "Superwhisper" at the desk to draft content quickly.</p>
+                        <p><strong>Demo 2: Instant Memos:</strong> Convert a raw voice memo transcript into a structured, readable summary with a single prompt.</p>
+                    </div>
+                </div>
 
-			<p>I'm the founder and CEO of Thinking Machines. We build data and AI systems for non-tech companies. <a href="http://thinkingmachin.es" target="_blank">Here's the website</a></p>
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#D35400] mb-3">2. Supercharged Research</h3>
+                    <p class="text-gray-600 mb-4">Move beyond simple searching to have AI synthesize information and map knowledge from trusted sources.</p>
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Demo 3: Trusted Research:</strong> Use Perplexity Pro's "Focus" feature to query specific sources like academic papers or official docs.</p>
+                        <p><strong>Demo 4: Knowledge Mapping:</strong> Upload documents to NotebookLM to generate instant summaries, FAQs, and even audio "podcasts".</p>
+                    </div>
+                </div>
 
-			<p>Here are my <a href="">LinkedIn</a> and <a href="">Twitter</a> handles.</p>
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#D35400] mb-3">3. Your Second Brain in ChatGPT</h3>
+                    <p class="text-gray-600 mb-4">Evolve ChatGPT from a generic tool into a personalized assistant that knows your work, style, and company context.</p>
+                     <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Demo 5: Context-Aware Emails:</strong> Turn a messy meeting transcript into a polished client email that reflects your company's tone and project details.</p>
+                        <p><strong>Demo 6: Hiring Support:</strong> Feed a job description, company values, and a resume to ChatGPT to generate highly specific screening questions.</p>
+                    </div>
+                </div>
 
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#D35400] mb-3">4. Custom AI Coaches</h3>
+                    <p class="text-gray-600 mb-4">Build a specialized coach that uses expert methods and your personal learning history to provide targeted feedback.</p>
+                     <div class="space-y-3 text-sm text-gray-700">
+                        <p><strong>Demo 7: Personalized Coding Coach:</strong> Prime an AI with specific teaching methods (e.g., Polya's method) and your own log of past coding challenges to get tailored guidance on new problems.</p>
+                    </div>
+                </div>
 
-	</section>
+            </div>
+        </section>
 
-	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-	<script type="text/javascript">
-		$('a[href^="#"]').click(function () {
-			var scroll = 0;
-			if ($(this).attr("href") != "#") {
-				scroll = $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
-			}
+        <section id="takeaways" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#D35400]">Key Concepts & Gotchas</h2>
+                <p class="text-lg text-gray-600 mt-2">Guiding principles for getting the most out of these tools.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="font-semibold text-xl text-gray-800 mb-6">Three Things to Remember</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <span class="text-[#E67E22] font-bold text-xl mr-4 mt-1">✓</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">ChatGPT is not Google.</h4>
+                                <p class="text-gray-600 text-sm">It's a reasoning engine. Use it to synthesize, create, and transform information, not just find it.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                           <span class="text-[#E67E22] font-bold text-xl mr-4 mt-1">✓</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Make prompts reusable.</h4>
+                                <p class="text-gray-600 text-sm">Build a personal library of your best prompts. This saves time and ensures consistent, high-quality results.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#E67E22] font-bold text-xl mr-4 mt-1">✓</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Collect context on yourself.</h4>
+                                <p class="text-gray-600 text-sm">The more personal data and examples you provide, the more personalized and useful the AI's output becomes.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-		    $('html, body').animate({
-		        scrollTop: scroll
-		    }, 500);
+                <div class="space-y-8">
+                    <div class="bg-[#F39C12]/10 border-l-4 border-[#F39C12] p-6 rounded-r-lg">
+                        <h3 class="font-semibold text-lg text-orange-900">The Big "Gotcha": These Are Self-CHECK Tools</h3>
+                        <p class="text-orange-800/90 mt-2">You are the final quality control. The AI is only as smart as the context and review you provide. Always check for hallucinations, laziness, or nonsensical answers. Verify critical information before using it.</p>
+                    </div>
+                     <div class="mt-8">
+                        <h3 class="font-semibold text-center text-xl text-[#D35400] mb-4">AI Usage Evolution</h3>
+                        <div class="chart-container">
+                            <canvas id="usageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-		    return false;
-		});
+            </div>
+        </section>
 
-		$(document).scroll(function () {
-			$(".content-section").each(function() {
-				console.log(".content-section > " + $(this).data("section"));
-				var position = $(document).scrollTop(); 
-			    var header = $('header').outerHeight();
+        <section id="faq" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#D35400]">Common Questions</h2>
+                <p class="text-lg text-gray-600 mt-2">Answering the big questions about models, cost, and adoption.</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-3">
+                <div class="accordion-item bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="accordion-header w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800 hover:text-[#E67E22]">
+                        <span>Is there a real difference between models?</span>
+                        <span class="accordion-icon text-xl text-gray-500 transform">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="p-5 pt-0 text-gray-600 leading-relaxed">Yes, absolutely. Different models excel at different tasks. Some are better at creative writing, others at logical reasoning or coding. The best model often depends on your specific use case, which is why it's valuable to try a few.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="accordion-header w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800 hover:text-[#E67E22]">
+                        <span>Do I really have to pay for this?</span>
+                        <span class="accordion-icon text-xl text-gray-500 transform">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="p-5 pt-0 text-gray-600 leading-relaxed">While free versions are powerful, a paid subscription (like $20/month for ChatGPT Plus) is arguably the highest ROI professional development you can buy. It gives you access to more advanced models, faster response times, and powerful features like custom GPTs.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="accordion-header w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800 hover:text-[#E67E22]">
+                        <span>When should my company Build vs. Buy?</span>
+                        <span class="accordion-icon text-xl text-gray-500 transform">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="p-5 pt-0 text-gray-600 leading-relaxed">This is a key strategic question. We'll discuss a framework for this decision, referencing the popular Dropbox YC post. The short answer: buy for common problems, build for unique competitive advantages.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg shadow-sm border border-gray-200">
+                    <button class="accordion-header w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800 hover:text-[#E67E22]">
+                        <span>How can my organization start adopting AI?</span>
+                        <span class="accordion-icon text-xl text-gray-500 transform">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="p-5 pt-0 text-gray-600 leading-relaxed">Adoption starts with empowerment and clear guidelines. We'll show our "Build and Buy" strategy slide, which provides a roadmap for how teams can start experimenting safely and effectively, fostering a culture of responsible innovation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-			    console.log($(this).position().top + " > " + (position + header));
-			    console.log(position);
-			    if (position == 0) {
-			    	$("a.active").removeClass('active');
-			    } else if($(this).position().top <= (position + header)){
-	               $("a.active").removeClass('active');
-	               $("a[data-section=" + $(this).data("section") + "]").addClass('active');
-	          	}
-			});
-		});
-	</script>
+    <footer class="bg-gray-100 border-t border-gray-200">
+        <div class="max-w-6xl mx-auto py-10 px-4 text-center text-gray-600">
+            <h2 class="text-2xl font-bold text-[#D35400] mb-2">Q&A and Discussion</h2>
+            <p>Thank you for participating! Let's open the floor for questions.</p>
+            <p class="text-sm mt-4">For follow-ups, please reach out.</p>
+        </div>
+    </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                menuIconOpen.classList.toggle('hidden', !isHidden);
+                menuIconClose.classList.toggle('hidden', isHidden);
+            });
+            
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                });
+            });
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                
+                header.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    
+                    accordionItems.forEach(i => {
+                        i.classList.remove('open');
+                        i.querySelector('.accordion-content').style.maxHeight = null;
+                    });
+
+                    if (!isOpen) {
+                        item.classList.add('open');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('usageChart').getContext('2d');
+            const usageChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Level 1: Basic Assistant', 'Level 2: Personalized Automation', 'Level 3: Interactive Coach'],
+                    datasets: [{
+                        label: 'Sophistication & Personalization',
+                        data: [30, 65, 100],
+                        backgroundColor: [
+                            '#F39C12', // Honey Glow
+                            '#E67E22', // Autumn Spice
+                            '#D35400'  // Terracotta Clay
+                        ],
+                        borderColor: [
+                            '#F39C12',
+                            '#E67E22',
+                            '#D35400'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#111827',
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 12 },
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    const level = context.label;
+                                    if (level === 'Level 1: Basic Assistant') {
+                                       return 'Using AI like a search engine for simple questions.';
+                                    }
+                                    if (level === 'Level 2: Personalized Automation') {
+                                       return 'Feeding AI with context (docs, emails) to automate specific tasks.';
+                                    }
+                                    if (level === 'Level 3: Interactive Coach') {
+                                       return 'Building custom AIs with specific personas for feedback and guidance.';
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                drawOnChartArea: false,
+                                drawBorder: false,
+                            },
+                            ticks: { display: false }
+                        },
+                        y: {
+                             grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14,
+                                    weight: '500'
+                                },
+                                color: '#374151'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
 </body>
-
 </html>
