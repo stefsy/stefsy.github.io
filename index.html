@@ -11,11 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Chosen Palette: Autumn Spice (#E67E22), Terracotta Clay (#D35400), Honey Glow (#F39C12) -->
-    <!-- Application Structure Plan: The SPA is designed as an "Interactive Syllabus" or "Workshop Hub". A sticky top navigation allows users to jump between key segments: an introduction ("Welcome"), the core demo "Workflows" presented as interactive cards, a conceptual chart and "Key Takeaways" section, and an interactive "FAQ" accordion. This non-linear structure was chosen over a simple slide-for-slide layout to empower users (workshop attendees) to freely explore the topics that interest them most, making the content more accessible and engaging than a linear presentation format. -->
+    <!-- Application Structure Plan: The SPA is designed as an "Interactive Syllabus" or "Workshop Hub". A sticky top navigation allows users to jump between key segments: an introduction ("Welcome"), the core demo "Workflows" presented as interactive cards, a conceptual chart and "Key Takeaways" section, and an interactive "FAQ" accordion. A modal was added to display a detailed prompt example without cluttering the main UI, keeping the user in context. This non-linear structure empowers users to freely explore the topics that interest them most. -->
     <!-- Visualization & Content Choices: 
-        - Report Info: The six main workshop demos. -> Goal: Organize & Compare. -> Viz/Presentation: A responsive grid of six interactive cards (HTML/Tailwind). -> Interaction: Subtle hover animations and clickable links. -> Justification: This breaks the linear slide flow, grouping related demos into thematic clusters for easy comparison and exploration.
-        - Report Info: The concept of evolving AI usage (Levels 1-3). -> Goal: Illustrate a conceptual change. -> Viz/Presentation: A horizontal bar chart. -> Interaction: Tooltips on hover provide details for each level. -> Justification: The chart offers a strong visual anchor for an abstract but critical concept from the workshop. -> Library/Method: Chart.js (Canvas).
-        - Report Info: The list of Frequently Asked Questions. -> Goal: Organize dense information cleanly. -> Viz/Presentation: An accordion component. -> Interaction: Users click a question to reveal the answer. -> Justification: This keeps the UI clean and prevents overwhelming the user, presenting detailed information only on demand. -> Library/Method: Vanilla JS toggling CSS classes.
+        - Report Info: The six main workshop demos. -> Goal: Organize & Compare. -> Viz/Presentation: A responsive grid of six interactive cards (HTML/Tailwind). A modal popup for detailed prompt examples. -> Interaction: Subtle hover animations, clickable links, and a button to open the modal. -> Justification: The card grid breaks the linear slide flow into thematic clusters. The modal provides deep-dive content on demand.
+        - Report Info: The concept of evolving AI usage (Levels 1-3). -> Goal: Illustrate a conceptual change. -> Viz/Presentation: A horizontal bar chart. -> Interaction: Tooltips on hover provide details for each level. -> Justification: The chart offers a strong visual anchor for this key concept. -> Library/Method: Chart.js (Canvas).
+        - Report Info: The list of Frequently Asked Questions. -> Goal: Organize dense information cleanly. -> Viz/Presentation: An accordion component. -> Interaction: Users click a question to reveal the answer. -> Justification: This keeps the UI clean and prevents overwhelming the user. -> Library/Method: Vanilla JS.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
@@ -50,11 +50,14 @@
         .accordion-item.open .accordion-header .accordion-icon {
             transform: rotate(45deg);
         }
+        .modal-body {
+            max-height: 70vh;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <nav class="bg-gray-50/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+    <nav class="bg-gray-50/80 backdrop-blur-md sticky top-0 z-40 border-b border-gray-200">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <span class="text-lg font-bold text-[#D35400]">GenAI Workshop</span>
@@ -125,7 +128,8 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200 flex flex-col">
                     <span class="font-bold text-sm text-[#E67E22]">DEMO 4</span>
                     <h3 class="text-xl font-bold text-[#D35400] mb-3 mt-1">Second Brain on ChatGPT: Meeting to Email/Memo</h3>
-                    <p class="text-gray-600 mb-4 flex-grow">Automatically transcribe meetings and use AI to instantly draft polished, context-aware follow-up emails.</p>
+                    <p class="text-gray-600 mb-4 flex-grow">Automatically transcribe meetings and use a detailed prompt to instantly draft polished, context-aware follow-up emails.</p>
+                     <button id="prompt-modal-button" class="text-sm text-[#D35400] hover:underline text-left">View Prompt Example →</button>
                      <a href="https://fathom.video/invite/ijEgww" target="_blank" class="inline-block bg-[#E67E22] text-white text-center font-bold py-2 px-4 rounded-md mt-auto hover:bg-[#D35400] transition-colors">Try Fathom Video</a>
                 </div>
 
@@ -137,10 +141,9 @@
 
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-gray-200 flex flex-col">
                     <span class="font-bold text-sm text-[#E67E22]">DEMO 6</span>
-                    <h3 class="text-xl font-bold text-[#D35400] mb-3 mt-1">ChatGPT Coach for Coding Skills</h3>
-                    <p class="text-gray-600 mb-4 flex-grow">Instruct an interactive AI coach that uses expert methods and your personal learning log to give you targeted feedback.</p>
+                    <h3 class="text-xl font-bold text-[#D35400] mb-3 mt-1">Coach on ChatGPT: Coding Skills</h3>
+                    <p class="text-gray-600 mb-4 flex-grow">Develop an interactive AI coach that uses expert methods and your personal learning log to give you targeted feedback.</p>
                 </div>
-
             </div>
         </section>
 
@@ -190,14 +193,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <section id="faq" class="py-16">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-[#D35400]">Frequently Asked Questions</h2>
-                <p class="text-lg text-gray-600 mt-2">Answering the  questions about models, cost, and adoption.</p>
+                <p class="text-lg text-gray-600 mt-2">Answering the questions about models, cost, and adoption.</p>
             </div>
             <div class="max-w-3xl mx-auto space-y-3">
                  <div class="accordion-item bg-white rounded-lg shadow-sm border border-gray-200">
@@ -226,13 +228,184 @@
                     <div class="accordion-content">
                         <div class="p-5 pt-0 text-gray-600 leading-relaxed">
                             <p>Yes! We do training for organizations and offer consulting services to help you re-imagine your business processes with both human and AI agents working together. We can help you decide what to buy & maximize, what to build, and help you implement and roll out everything.</p>
-                            <p class="mt-4">Email me or Claudia at <a href="mailto:stef@thinkingmachin.es" class="text-[#D35400] underline">stef@thinkingmachin.es</a> and <a href="mailto:claudia@thinkingmachin.es" class="text-[#D35400] underline">claudia@thinkingmachin.es</a>.</p>
+                            <p class="mt-4">Email me at <a href="mailto:stef@thinkingmachin.es" class="text-[#D35400] underline">stef@thinkingmachin.es</a> or add me on <a href="https://www.linkedin.com/in/stefsy/" target="_blank" class="text-[#D35400] underline">LinkedIn</a>.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+    
+    <div id="prompt-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-xl font-bold text-[#D35400]">Prompt: Meeting Transcript to Client Email</h3>
+                <button id="close-modal-button" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto modal-body">
+                <pre class="bg-gray-100 p-4 rounded-md text-xs whitespace-pre-wrap font-mono"><code>## Inputs
+- `{$REFERENCE_MATERIALS}` - Technical specifications, pricing, timelines, and project details
+- `{$TITLE}` - Subject line or topic for the email
+- `{$BODY}` - Core message, request, or context to communicate
+
+## Instructions
+
+You are a technology sales executive at a high-end professional services firm. You will write professional emails that demonstrate deep technical expertise while maintaining a consultative, approachable tone.
+
+### Input Processing
+First, review the provided materials:
+
+&lt;reference_materials&gt;
+{$REFERENCE_MATERIALS}
+&lt;/reference_materials&gt;
+
+Email topic:
+&lt;title&gt;
+{$TITLE}
+&lt;/title&gt;
+
+Core message:
+&lt;body&gt;
+{$BODY}
+&lt;/body&gt;
+
+### Style Guidelines
+Write emails that sound like patio11 and dang - warm, intelligent, and approachable. This means:
+
+**Communication Philosophy**:
+- **Respectful directness**: Get to the point quickly without being abrupt or rude
+- **Informed confidence**: Demonstrate expertise through specific knowledge, not jargon or posturing
+- **Genuine helpfulness**: Focus on solving problems and creating value, not just selling
+- **Intellectual humility**: Acknowledge uncertainties and complexities rather than oversimplifying
+
+**Language Patterns**:
+- **Conversational precision**: "We're thinking 8-10 days" vs "The estimated timeline is 8-10 business days"
+- **Specific details over vague claims**: "17,061 SGD with 12% discount" vs "competitive pricing available"
+- **Natural technical integration**: Use industry terms when they add clarity, skip them when they don't
+- **Understated confidence**: "I think it's quite likely" vs "We guarantee" or "Obviously"
+
+**Tone Markers**:
+- **Friendly professionalism**: Use contractions, casual connectors ("Happy Chinese New Year!")
+- **Problem-solving focus**: Lead with solutions and practical next steps
+- **Contextual awareness**: Reference shared knowledge and previous conversations naturally
+- **Appropriate enthusiasm**: Show genuine interest without overselling (:) vs !!!)
+
+**Avoid**:
+- Corporate speak or buzzword-heavy language
+- Overly formal or stuffy phrasing
+- Aggressive sales tactics or pressure
+- Technical jargon without clear purpose
+- Unnecessary qualifiers or hedge words
+
+### Content Requirements
+
+**Technical Depth**: Demonstrate understanding of:
+- Enterprise technology ecosystems
+- Cloud platforms (Azure, AWS, GCP)
+- Data architecture and digital transformation
+- AI/GenAI applications and deployment
+- Industry-standard terminology used naturally
+
+**Business Value Focus**: Always connect technical details to:
+- Strategic outcomes
+- ROI and business impact
+- Operational efficiency
+- Competitive advantage
+
+**Practical Elements**: When relevant from reference materials, include:
+- Specific pricing with context
+- Realistic timelines
+- Technical scope and complexity
+- Risk mitigation approaches
+
+### Email Structure Template
+
+&lt;email&gt;
+&lt;title&gt;[Strategic Action Title - 5-10 words max]&lt;/title&gt;
+&lt;body&gt;
+[If responding] Brief acknowledgment of previous communication
+
+[Core Request/Update] Lead with main point using appropriate technical context
+
+[Essential Details] Key information with industry terminology, structured logically:
+- Technical scope and approach
+- Business rationale
+- Pricing/timeline if applicable (from reference materials)
+- Implementation considerations
+
+[Next Steps] Clear, actionable next steps
+
+[Closing] Professional but warm closing
+&lt;/body&gt;
+&lt;/email&gt;
+
+### Quality Checklist
+Before finalizing, ensure your email:
+- Sounds like it comes from someone with deep enterprise technology expertise
+- Uses technical terms naturally, not forced
+- Focuses on business outcomes, not just features
+- Includes specific details from reference materials when relevant
+- Has clear next steps
+- Maintains professional warmth throughout
+
+### Example Pattern Analysis
+Reference the provided examples to match:
+- **Brevity with substance**: Concise but information-dense
+- **Technical confidence**: Uses industry terms appropriately
+- **Business context**: Always ties to strategic value
+- **Relationship building**: Warm but professional tone
+- **Action orientation**: Clear next steps in every email
+
+&lt;example_emails&gt;
+&lt;email&gt;
+&lt;title&gt;Quick Intro Call This Week?&lt;/title&gt;
+&lt;body&gt;Thanks for the kind intro Wei Chin.
+
+Dear Shen Xiang and Yee Hian,
+
+What is your schedule for an intro call? Let me know if you are free between 4-6pm on Thursday, or any time next week :) 
+
+Would be great to learn more about your needs, and share a bit of Thinking Machines work -- we are consulting partners for many enterprise organizations in the region, helping them build and operate their data platforms, and AI+GenAI apps.&lt;/body&gt;
+&lt;/email&gt;
+
+&lt;email&gt;
+&lt;title&gt;Azure ELZ Strategy Discussion - GenAI Success&lt;/title&gt;
+&lt;body&gt;Could we schedule time to chat in the next week? Our Gen AI application for the client has been in stable production for a quarter now and is getting great feedback :) We're now starting the process of planning the next year in terms of high-level strategy and have meetings scheduled with the CTO of in the first weeks of Feb. He is concerned about maximizing the Azure ELZ. I believe our GenAI app is the only application on it right now.
+
+I'd like to ask for your support to come up with a list of recommended digital, and business use cases for them on Azure ELZ that we can jointly present. Thinking Machines will be providing a list of Gen AI use cases and a roadmap for deploying that to the existing platform. Our shared goal here is to get more usage out of the existing infra that we've stood up together.
+
+Happy Chinese New Year!&lt;/body&gt;
+&lt;/email&gt;
+
+&lt;email&gt;
+&lt;title&gt;AI Translator Upgrade Proposal&lt;/title&gt;
+&lt;body&gt;I would strongly recommend one more feature to your good to have list, which would be to add a listener to the "copy" and "export" buttons, so that we can improve our analytics to have number of translations 'accepted' vs what we have now, which are more DAU/MAU and number of translations generated.
+
+For the 9 new language pairs, we're thinking a simple update to the base prompt and updating all the API and UI elements will take 8 to 10 days, I think it's quite likely that the reversed pairs will work well out of the box. There are four novel pairs where we recommend budgeting some time for evals and prompt improvements: English&lt;->Bahasa, Malay&lt;-> Chinese, Malay-> Tamil, Chinese-Tamil.
+
+Ballpark costs w/ 12% client discount included if approved in principle by Jan 31, 2025:
+1. 9 new pairs: 17,061 SGD
+2. Supporting file upload and export, and improved engagement tracking: 11,090 SGD
+Total for both: 28,151 SGD
+
+**Work Plan Time Est (Days)**
+Update base prompt, update API, update UI, upload fresh dictionaries: 8-10
+Estimating 2-3 days of evals and prompt improvements each to handle the novel pairs: 10
+Update UI and API to support file upload, parsing, and export: 10
+Improved analytics by adding listener to 'copy' and 'export' events and building dashboard: 3
+
+Please let me know if you have any questions! Shall we get on a call in the new year to discuss if this works for you?
+
+1 more point, implementing the above changes your TCO. We would need to turn on Cloud Storage for ongoing storage of the files to be uploaded and exported. Cost is small, it's SGD 2.68/month per 100GB. As these are all text files, I don't think you'll exceed 100GB in a year.&lt;/body&gt;
+&lt;/email&gt;
+&lt;/example_emails&gt;
+
+Now write your email following these guidelines.
+</code></pre>
+            </div>
+        </div>
+    </div>
+
 
     <footer class="bg-gray-100 border-t border-gray-200">
         <div class="max-w-6xl mx-auto py-10 px-4 text-center text-gray-600">
@@ -248,6 +421,9 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const menuIconOpen = document.getElementById('menu-icon-open');
             const menuIconClose = document.getElementById('menu-icon-close');
+            const promptModal = document.getElementById('prompt-modal');
+            const promptModalButton = document.getElementById('prompt-modal-button');
+            const closeModalButton = document.getElementById('close-modal-button');
 
             mobileMenuButton.addEventListener('click', () => {
                 const isHidden = mobileMenu.classList.contains('hidden');
@@ -282,6 +458,23 @@
                         content.style.maxHeight = content.scrollHeight + 'px';
                     }
                 });
+            });
+            
+            promptModalButton.addEventListener('click', () => {
+                promptModal.classList.remove('hidden');
+                promptModal.classList.add('flex');
+            });
+
+            closeModalButton.addEventListener('click', () => {
+                promptModal.classList.add('hidden');
+                promptModal.classList.remove('flex');
+            });
+            
+            promptModal.addEventListener('click', (event) => {
+                if (event.target === promptModal) {
+                    promptModal.classList.add('hidden');
+                    promptModal.classList.remove('flex');
+                }
             });
 
             const ctx = document.getElementById('usageChart').getContext('2d');
